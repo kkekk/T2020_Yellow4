@@ -246,7 +246,7 @@ class Dashboard extends Component {
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" xl="12">
-            <Card>
+            {/* <Card>
               <CardBody>
                 <Carousel
                   activeIndex={this.state.activeIndex}
@@ -258,9 +258,17 @@ class Dashboard extends Component {
                 </Carousel>
 
               </CardBody>
-            </Card>
+            </Card> */}
             <Card>
               <CardBody>
+              <Carousel
+                  activeIndex={this.state.activeIndex}
+                  next={this.next}
+                  previous={this.previous}
+                  ride="carousel"
+                >
+                  {messages}
+                </Carousel>
                 <Row className="mt-5">
                   <Col xs="6" sm="4">
                     <h4> Outflow </h4>
@@ -309,15 +317,9 @@ class Dashboard extends Component {
                     </p>
                   </Col>
                 </Row>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
 
-        <Row>
-          <Col xs="12" xl="12">
-            <Card>
-              <CardBody>
+
+
                 <h3> Get other deals with these! </h3>
                 <Row>
                   <Col xs="6" sm="4">
