@@ -26,3 +26,8 @@ export async function getCreditAccountBalance(accountId){
     return response
 }
 
+export async function getTransactions(accountId, startDate, endDate){
+    const response = await httpClient.get("/transactions/" + accountId + "?from=" + startDate + "&to="+ endDate )
+    return response
+}
+

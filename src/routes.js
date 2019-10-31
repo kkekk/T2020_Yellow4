@@ -41,7 +41,8 @@ const Transaction = React.lazy(() => import('./views/Transaction/Transaction'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
 
-  { path: '/transaction', name:"Transaction", component: Transaction },
+  { path: '/transaction/deposit', name:"Transaction Deposit", component: Transaction },
+  { path: '/transaction/credit', name:"Transaction Credit", component: Transaction },
 
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },

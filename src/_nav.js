@@ -13,10 +13,18 @@ export default {
       name: 'Transaction',
       url: '/transaction',
       icon: 'icon-speedometer',
-      // badge: {
-      //   variant: 'info',
-      //   text: 'NEW',
-      // },
+      children: [
+        {
+          name: 'Deposit',
+          url: '/transaction/deposit',
+          icon: 'icon-puzzle',
+        },
+        {
+          name: 'Credit',
+          url: '/transaction/credit',
+          icon: 'icon-puzzle',
+        },
+      ]
     },
     {
       title: true,
