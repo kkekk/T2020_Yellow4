@@ -16,6 +16,7 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import { connect } from "react-redux";
 
 import {
   getDepositAccounts,
@@ -29,7 +30,7 @@ class Transaction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      customerId: 1,
+      customerId: this.props.customerId,
       accountType: window.location.hash.toString().includes("deposit")
         ? "DEPOSIT"
         : "CREDIT",
@@ -115,7 +116,7 @@ class Transaction extends Component {
         })
         .catch(e => console.log(e));
     } else {
-      getCreditAccounts(1)
+      getCreditAccounts(this.state.customerId)
         .then(res => {
           console.log(res.data);
           this.setState({
@@ -147,7 +148,7 @@ class Transaction extends Component {
                             }
                             onClick={() => this.handleAccountClick(acc)}
                           >
-                            {acc.type} - {acc.displayName} - {acc.accountNumber}
+                            {acc.type} - {acc.displayName} - {acc.accountNumber}{acc.cardNumber}
                           </ListGroupItem>
                         );
                       })}
@@ -248,4 +249,10 @@ class Transaction extends Component {
   }
 }
 
-export default Transaction;
+const mapStateToProps = (state) => {
+    return{
+        customerId: state.user.customerId,
+    }
+}
+
+export default connect(mapStateToProps)(Transaction);

@@ -3,9 +3,9 @@ import moment from "moment";
 
 const initialState = {
   login: false,
-  lastName: "xu",
-  firstName: "jinzheng",
-  lastLogin: "2019-10-01",
+  lastName: null,
+  firstName: null,
+  lastLogin: null,
   customerId: null
 };
 

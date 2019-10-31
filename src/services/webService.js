@@ -42,9 +42,13 @@ export async function getCustomerDetails(userId){
 }
 
 export async function getDashboardData(accountIds){
-    const response = await httpClientServer.get("/summary",{
-        accountIds:accountIds
-    })
+    var url = "/summary2?accountIds=" + accountIds[0]
+
+    for (var i = 1; i < accountIds.length; i++){
+        url = url + "&accountIds=" + accountIds[i]
+    }
+
+    const response = await httpClientServer.get(url)
     return response
 }
 

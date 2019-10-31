@@ -52,7 +52,7 @@ class Login extends Component {
                 lastLogin: lastLogin,
                 customerId: customerId}
               loginAction(obj)
-              window.location.hash = "/transaction/deposit"
+              window.location.hash = "/dashboard"
             })
         });
 
