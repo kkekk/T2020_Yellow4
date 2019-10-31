@@ -12,3 +12,8 @@ export const httpClient = axios.create({
         
     }
 })
+
+export const httpClientServer = axios.create({
+    baseURL: "http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com",
+    timeout: 20000,
+})

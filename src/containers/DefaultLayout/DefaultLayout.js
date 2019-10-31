@@ -2,6 +2,7 @@ import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
+import UserProfile from '../../components/UserProfile'
 
 import {
   AppAside,
@@ -41,9 +42,10 @@ class DefaultLayout extends Component {
         </AppHeader> */}
         <div className="app-body">
           <AppSidebar fixed display="lg">
-            <AppSidebarHeader />
-            <AppSidebarForm />
+            <AppSidebarHeader><UserProfile/></AppSidebarHeader>
+            <AppSidebarForm /> 
             <Suspense>
+
             <AppSidebarNav navConfig={navigation} {...this.props} router={router}/>
             </Suspense>
             <AppSidebarFooter />

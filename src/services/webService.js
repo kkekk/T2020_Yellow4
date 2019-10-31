@@ -1,4 +1,4 @@
-import {httpClient} from './httpClient'
+import {httpClient, httpClientServer} from './httpClient'
 
 
 export async function testGet() {
@@ -28,6 +28,23 @@ export async function getCreditAccountBalance(accountId){
 
 export async function getTransactions(accountId, startDate, endDate){
     const response = await httpClient.get("/transactions/" + accountId + "?from=" + startDate + "&to="+ endDate )
+    return response
+}
+
+export async function getCustomerId(username){
+    const response = await httpClient.get("/customers/" + username)
+    return response
+}
+
+export async function getCustomerDetails(userId){
+    const response = await httpClient.get("/customers/" + userId +"/details")
+    return response
+}
+
+export async function getDashboardData(accountIds){
+    const response = await httpClientServer.get("/summary",{
+        accountIds:accountIds
+    })
     return response
 }
 

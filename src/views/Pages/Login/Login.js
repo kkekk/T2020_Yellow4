@@ -1,8 +1,73 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import {loginAction} from '../../../redux/actions/login'
+import { getCustomerId, getCustomerDetails } from "../../../services/webService";
+import moment from "moment";
 
 class Login extends Component {
+
+  constructor(props){
+    super(props)
+
+    this.state={
+      username: null
+    }
+  }
+
+  login = () => {
+
+    var username = this.state.username
+      if (username !== "marytan" && username !== "limzeyang") {
+        username = "prasannaghali";
+      }
+      var customerId, lastName, firstName, lastLogin;
+      getCustomerId(username)
+        .then(res => {
+          customerId = res.data.customerId;
+        })
+        .catch(e => {
+          console.log(e);
+          customerId = 1;
+        })
+        .finally(() => {
+          getCustomerDetails(customerId)
+            .then(res => {
+              lastName = res.data.lastName;
+              firstName = res.data.firstName;
+              lastLogin = moment(res.data.lastLogIn).format("YYYY-MM-DD");
+            })
+            .catch(e => {
+              console.log(e);
+              lastName = "Lim";
+              firstName = "Ze Yang";
+              lastLogin = "2019-01-27";
+            }).finally(() => {
+              const {loginAction} = this.props
+              const obj = {
+                lastName: lastName,
+                firstName: firstName,
+                lastLogin: lastLogin,
+                customerId: customerId}
+              loginAction(obj)
+              window.location.hash = "/transaction/deposit"
+            })
+        });
+
+
+    
+
+    
+  }
+
+  handleChange =e => {
+    this.setState({
+      username: e.target.value
+    })
+  }
+
   render() {
     return (
       <div className="app flex-row align-items-center">
@@ -21,7 +86,7 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Username" autoComplete="username" />
+                        <Input type="text" placeholder="Username" onChange={this.handleChange}/>
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -33,7 +98,7 @@ class Login extends Component {
                       </InputGroup>
                       <Row>
                         <Col xs="6">
-                          <Button color="primary" className="px-4">Login</Button>
+                          <Button color="primary" className="px-4" onClick={this.login}>Login</Button>
                         </Col>
                         <Col xs="6" className="text-right">
                           <Button color="link" className="px-0">Forgot password?</Button>
@@ -45,12 +110,9 @@ class Login extends Component {
                 <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
                   <CardBody className="text-center">
                     <div>
-                      <h2>Sign up</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                      <Link to="/register">
-                        <Button color="primary" className="mt-3" active tabIndex={-1}>Register Now!</Button>
-                      </Link>
+                      <h2>Contact Us</h2>
+                      <p>If you have any problems related to your online banking account, please contact us by email or phone number: +65 9000 1000 </p>
+                        <Button color="primary" className="mt-3" active tabIndex={-1}>Contact Now!</Button>
                     </div>
                   </CardBody>
                 </Card>
@@ -63,4 +125,16 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return{
+      lastName: state.user.lastName,
+      firstName: state.user.firstName,
+      lastLogin: state.user.lastLogin,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({loginAction}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
